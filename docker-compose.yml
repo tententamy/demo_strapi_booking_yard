@@ -1,0 +1,51 @@
+version: "3.8"
+
+services:
+  strapi:
+    build: .
+    container_name: strapi-app
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    environment:
+      HOST: 0.0.0.0
+      PORT: 1337
+
+      # Secrets
+      APP_KEYS: "ivPm+kohYb+lJ41TG5LFcg==,ORFdqQ7QdUyQZAFrYWjG6A==,8v5qnK7JeD7pakKtcjmo/w==,kQ2wXjiJ4lqfLGh/4k7F0g=="
+      API_TOKEN_SALT: "seG2uDBh9xwNy/TllsT/9Q=="
+      ADMIN_JWT_SECRET: "5+IcgHXAcwk3meNlZ+aRig=="
+      TRANSFER_TOKEN_SALT: "SEAs+BBa4RCd5czTk922Bw=="
+      ENCRYPTION_KEY: "GRXIwdsM6lioLt5w0ArWsQ=="
+
+      # Database
+      DATABASE_CLIENT: postgres
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_NAME: strapi
+      DATABASE_USERNAME: admin
+      DATABASE_PASSWORD: 123456
+      DATABASE_SSL: "false"
+
+    ports:
+      - "1337:1337"
+
+    volumes:
+      - .:/app  # Source code
+      - /app/node_modules  # Giữ node_modules trong container
+
+  postgres:
+    image: postgres:15
+    container_name: strapi-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: strapi
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 123456
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
