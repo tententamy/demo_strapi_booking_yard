@@ -430,6 +430,113 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiYardBookingYardBooking extends Struct.CollectionTypeSchema {
+  collectionName: 'yard_bookings';
+  info: {
+    displayName: 'Yard_Booking';
+    pluralName: 'yard-bookings';
+    singularName: 'yard-booking';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    created_date: Schema.Attribute.DateTime;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    customer_name: Schema.Attribute.String & Schema.Attribute.Required;
+    date_booking: Schema.Attribute.Date & Schema.Attribute.Required;
+    end_time: Schema.Attribute.Time & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::yard-booking.yard-booking'
+    > &
+      Schema.Attribute.Private;
+    price: Schema.Attribute.Float & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    start_time: Schema.Attribute.Time & Schema.Attribute.Required;
+    status_booking: Schema.Attribute.Enumeration<
+      ['Booked', 'Cancelled', 'In Time', 'Out Time']
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    yards: Schema.Attribute.Relation<'oneToMany', 'api::yard.yard'>;
+  };
+}
+
+export interface ApiYardTypeYardType extends Struct.CollectionTypeSchema {
+  collectionName: 'yard_types';
+  info: {
+    displayName: 'Yard_Type';
+    pluralName: 'yard-types';
+    singularName: 'yard-type';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::yard-type.yard-type'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.Text & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    yard: Schema.Attribute.Relation<'manyToOne', 'api::yard.yard'>;
+  };
+}
+
+export interface ApiYardYard extends Struct.CollectionTypeSchema {
+  collectionName: 'yards';
+  info: {
+    displayName: 'Yard';
+    pluralName: 'yards';
+    singularName: 'yard';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    active: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    descriptipons: Schema.Attribute.Blocks;
+    images: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    > &
+      Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::yard.yard'> &
+      Schema.Attribute.Private;
+    maintain_date: Schema.Attribute.DateTime;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    yard_booking: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::yard-booking.yard-booking'
+    >;
+    yard_types: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::yard-type.yard-type'
+    >;
+  };
+}
+
 export interface PluginContentReleasesRelease
   extends Struct.CollectionTypeSchema {
   collectionName: 'strapi_releases';
@@ -940,6 +1047,9 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::yard-booking.yard-booking': ApiYardBookingYardBooking;
+      'api::yard-type.yard-type': ApiYardTypeYardType;
+      'api::yard.yard': ApiYardYard;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

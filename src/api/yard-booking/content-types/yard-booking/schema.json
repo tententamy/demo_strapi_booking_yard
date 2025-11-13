@@ -1,0 +1,53 @@
+{
+  "kind": "collectionType",
+  "collectionName": "yard_bookings",
+  "info": {
+    "singularName": "yard-booking",
+    "pluralName": "yard-bookings",
+    "displayName": "Yard_Booking"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "yards": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::yard.yard",
+      "mappedBy": "yard_booking"
+    },
+    "customer_name": {
+      "type": "string",
+      "required": true
+    },
+    "date_booking": {
+      "type": "date",
+      "required": true
+    },
+    "start_time": {
+      "type": "time",
+      "required": true
+    },
+    "end_time": {
+      "type": "time",
+      "required": true
+    },
+    "price": {
+      "type": "float",
+      "required": true
+    },
+    "status_booking": {
+      "type": "enumeration",
+      "enum": [
+        "Booked",
+        "Cancelled",
+        "In Time",
+        "Out Time"
+      ]
+    },
+    "created_date": {
+      "type": "datetime"
+    }
+  }
+}

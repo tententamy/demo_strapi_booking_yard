@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "yard_types",
+  "info": {
+    "singularName": "yard-type",
+    "pluralName": "yard-types",
+    "displayName": "Yard_Type"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "text",
+      "required": true
+    },
+    "yard": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::yard.yard",
+      "inversedBy": "yard_types"
+    }
+  }
+}
