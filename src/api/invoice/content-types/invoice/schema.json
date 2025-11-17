@@ -1,0 +1,78 @@
+{
+  "kind": "collectionType",
+  "collectionName": "invoices",
+  "info": {
+    "singularName": "invoice",
+    "pluralName": "invoices",
+    "displayName": "Invoice"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "invoiceNumber": {
+      "type": "string",
+      "unique": true
+    },
+    "subtotal": {
+      "type": "decimal"
+    },
+    "discountAmount": {
+      "type": "decimal",
+      "default": 0
+    },
+    "taxAmount": {
+      "type": "decimal",
+      "default": 0
+    },
+    "grandTotal": {
+      "type": "decimal"
+    },
+    "status": {
+      "type": "enumeration",
+      "required": true,
+      "default": "draft",
+      "enum": [
+        "draft",
+        "pending",
+        "paid",
+        "cancelled"
+      ]
+    },
+    "paymentMethod": {
+      "type": "enumeration",
+      "enum": [
+        "cash",
+        "momo",
+        "bank_transfer"
+      ]
+    },
+    "dueDate": {
+      "type": "datetime"
+    },
+    "issuedDate": {
+      "type": "datetime"
+    },
+    "paidDate": {
+      "type": "datetime"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "booking": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::yard-booking.yard-booking"
+    },
+    "customer": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::customer.customer"
+    },
+    "items": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::invoice-item.invoice-item"
+    }
+  }
+}

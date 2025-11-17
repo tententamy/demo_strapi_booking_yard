@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_event_details_event_details",
+  "info": {
+    "displayName": "EventDetails"
+  },
+  "attributes": {
+    "eventName": {
+      "type": "string"
+    },
+    "expectedAttendees": {
+      "type": "integer"
+    },
+    "setupFee": {
+      "type": "decimal"
+    }
+  }
+}

@@ -4,50 +4,74 @@
   "info": {
     "singularName": "yard-booking",
     "pluralName": "yard-bookings",
-    "displayName": "Yard_Booking"
+    "displayName": "YardBooking"
   },
   "options": {
     "draftAndPublish": true
   },
-  "pluginOptions": {},
   "attributes": {
-    "yards": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::yard.yard",
-      "mappedBy": "yard_booking"
-    },
-    "customer_name": {
-      "type": "string",
-      "required": true
-    },
-    "date_booking": {
-      "type": "date",
-      "required": true
-    },
-    "start_time": {
-      "type": "time",
-      "required": true
-    },
-    "end_time": {
-      "type": "time",
-      "required": true
-    },
-    "price": {
-      "type": "float",
-      "required": true
-    },
-    "status_booking": {
+    "bookingType": {
       "type": "enumeration",
+      "required": true,
+      "default": "hourly",
       "enum": [
-        "Booked",
-        "Cancelled",
-        "In Time",
-        "Out Time"
+        "hourly",
+        "daily",
+        "event"
       ]
     },
-    "created_date": {
-      "type": "datetime"
+    "startTime": {
+      "type": "datetime",
+      "required": true
+    },
+    "endTime": {
+      "type": "datetime",
+      "required": true
+    },
+    "durationHours": {
+      "type": "decimal"
+    },
+    "customerNotes": {
+      "type": "string"
+    },
+    "status": {
+      "type": "enumeration",
+      "required": true,
+      "default": "pending",
+      "enum": [
+        "pending",
+        "confirmed",
+        "cancelled",
+        "completed"
+      ]
+    },
+    "totalEstimate": {
+      "type": "decimal"
+    },
+    "eventDetails": {
+      "type": "component",
+      "repeatable": false,
+      "component": "event-details.event-details"
+    },
+    "yard": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::yard.yard"
+    },
+    "services": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::service.service"
+    },
+    "customer": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::customer.customer"
+    },
+    "invoice": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::invoice.invoice"
     }
   }
 }

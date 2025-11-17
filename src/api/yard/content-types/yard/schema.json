@@ -9,55 +9,43 @@
   "options": {
     "draftAndPublish": true
   },
-  "pluginOptions": {},
   "attributes": {
     "name": {
       "type": "string",
       "required": true
     },
-    "active": {
+    "location": {
+      "type": "string"
+    },
+    "status": {
+      "type": "enumeration",
+      "required": true,
+      "default": "available",
+      "enum": [
+        "available",
+        "maintenance",
+        "booked"
+      ]
+    },
+    "photos": {
+      "type": "media",
+      "multiple": true
+    },
+    "equipmentIncluded": {
+      "type": "string",
+      "multiple": true
+    },
+    "maxCapacity": {
+      "type": "integer"
+    },
+    "isActive": {
       "type": "boolean",
       "default": true
     },
-    "descriptipons": {
-      "type": "blocks"
-    },
-    "images": {
-      "type": "media",
-      "multiple": true,
-      "required": true,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
-    },
-    "maintain_date": {
-      "type": "datetime",
-      "conditions": {
-        "visible": {
-          "==": [
-            {
-              "var": "active"
-            },
-            false
-          ]
-        }
-      },
-      "required": false
-    },
-    "yard_types": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::yard-type.yard-type",
-      "mappedBy": "yard"
-    },
-    "yard_booking": {
+    "yardType": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::yard-booking.yard-booking",
-      "inversedBy": "yards"
+      "target": "api::yard-type.yard-type"
     }
   }
 }

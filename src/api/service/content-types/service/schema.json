@@ -1,0 +1,62 @@
+{
+  "kind": "collectionType",
+  "collectionName": "services",
+  "info": {
+    "singularName": "service",
+    "pluralName": "services",
+    "displayName": "Service"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "category": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "addon",
+        "yard_base"
+      ]
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "pricePerUnit": {
+      "type": "decimal",
+      "required": true,
+      "min": 0
+    },
+    "unit": {
+      "type": "string"
+    },
+    "isHourly": {
+      "type": "boolean",
+      "default": false
+    },
+    "isDaily": {
+      "type": "boolean",
+      "default": false
+    },
+    "isEvent": {
+      "type": "boolean",
+      "default": false
+    },
+    "maxQuantity": {
+      "type": "integer"
+    },
+    "availableFrom": {
+      "type": "datetime"
+    },
+    "availableTo": {
+      "type": "datetime"
+    },
+    "isActive": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}

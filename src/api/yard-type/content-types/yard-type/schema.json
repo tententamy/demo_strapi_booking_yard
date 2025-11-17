@@ -4,22 +4,44 @@
   "info": {
     "singularName": "yard-type",
     "pluralName": "yard-types",
-    "displayName": "Yard_Type"
+    "displayName": "YardType"
   },
   "options": {
     "draftAndPublish": true
   },
-  "pluginOptions": {},
   "attributes": {
     "name": {
-      "type": "text",
+      "type": "string",
       "required": true
     },
-    "yard": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::yard.yard",
-      "inversedBy": "yard_types"
+    "description": {
+      "type": "richtext"
+    },
+    "capacity": {
+      "type": "integer",
+      "required": true,
+      "min": 1
+    },
+    "isActive": {
+      "type": "boolean",
+      "default": true
+    },
+    "basePricePerHour": {
+      "type": "decimal",
+      "required": true,
+      "min": 0
+    },
+    "basePricePerDay": {
+      "type": "decimal",
+      "required": true,
+      "min": 0
+    },
+    "eventMultiplier": {
+      "type": "decimal",
+      "default": 1
+    },
+    "pricingTiers": {
+      "type": "json"
     }
   }
 }

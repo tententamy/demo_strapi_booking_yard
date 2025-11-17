@@ -430,10 +430,212 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiCustomerCustomer extends Struct.CollectionTypeSchema {
+  collectionName: 'customers';
+  info: {
+    description: 'Kh\u00E1ch h\u00E0ng - Info c\u00E1 nh\u00E2n & Thanh to\u00E1n';
+    displayName: 'Customer';
+    pluralName: 'customers';
+    singularName: 'customer';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    address: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    dateOfBirth: Schema.Attribute.DateTime;
+    fullName: Schema.Attribute.String & Schema.Attribute.Required;
+    isVerified: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::customer.customer'
+    > &
+      Schema.Attribute.Private;
+    loyaltyPoints: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    notes: Schema.Attribute.String;
+    paymentMethods: Schema.Attribute.JSON;
+    phone: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    walletBalance: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
+  };
+}
+
+export interface ApiInvoiceItemInvoiceItem extends Struct.CollectionTypeSchema {
+  collectionName: 'invoice_items';
+  info: {
+    displayName: 'InvoiceItem';
+    pluralName: 'invoice-items';
+    singularName: 'invoice-item';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    booking: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::yard-booking.yard-booking'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.String;
+    endTime: Schema.Attribute.DateTime;
+    eventDetails: Schema.Attribute.Component<
+      'event-details.event-details',
+      false
+    >;
+    invoice: Schema.Attribute.Relation<'manyToOne', 'api::invoice.invoice'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::invoice-item.invoice-item'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    quantity: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      >;
+    service: Schema.Attribute.Relation<'manyToOne', 'api::service.service'>;
+    startTime: Schema.Attribute.DateTime;
+    totalPrice: Schema.Attribute.Decimal;
+    type: Schema.Attribute.Enumeration<['hourly', 'daily', 'event', 'addon']> &
+      Schema.Attribute.Required;
+    unit: Schema.Attribute.String;
+    unitPrice: Schema.Attribute.Decimal &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    yard: Schema.Attribute.Relation<'manyToOne', 'api::yard.yard'>;
+  };
+}
+
+export interface ApiInvoiceInvoice extends Struct.CollectionTypeSchema {
+  collectionName: 'invoices';
+  info: {
+    displayName: 'Invoice';
+    pluralName: 'invoices';
+    singularName: 'invoice';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    booking: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::yard-booking.yard-booking'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    customer: Schema.Attribute.Relation<'manyToOne', 'api::customer.customer'>;
+    discountAmount: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
+    dueDate: Schema.Attribute.DateTime;
+    grandTotal: Schema.Attribute.Decimal;
+    invoiceNumber: Schema.Attribute.String & Schema.Attribute.Unique;
+    issuedDate: Schema.Attribute.DateTime;
+    items: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::invoice-item.invoice-item'
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::invoice.invoice'
+    > &
+      Schema.Attribute.Private;
+    notes: Schema.Attribute.String;
+    paidDate: Schema.Attribute.DateTime;
+    paymentMethod: Schema.Attribute.Enumeration<
+      ['cash', 'momo', 'bank_transfer']
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    status: Schema.Attribute.Enumeration<
+      ['draft', 'pending', 'paid', 'cancelled']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'draft'>;
+    subtotal: Schema.Attribute.Decimal;
+    taxAmount: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<0>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiServiceService extends Struct.CollectionTypeSchema {
+  collectionName: 'services';
+  info: {
+    displayName: 'Service';
+    pluralName: 'services';
+    singularName: 'service';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    availableFrom: Schema.Attribute.DateTime;
+    availableTo: Schema.Attribute.DateTime;
+    category: Schema.Attribute.Enumeration<['addon', 'yard_base']> &
+      Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.RichText;
+    isActive: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    isDaily: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    isEvent: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    isHourly: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::service.service'
+    > &
+      Schema.Attribute.Private;
+    maxQuantity: Schema.Attribute.Integer;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    pricePerUnit: Schema.Attribute.Decimal &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    publishedAt: Schema.Attribute.DateTime;
+    unit: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiYardBookingYardBooking extends Struct.CollectionTypeSchema {
   collectionName: 'yard_bookings';
   info: {
-    displayName: 'Yard_Booking';
+    displayName: 'YardBooking';
     pluralName: 'yard-bookings';
     singularName: 'yard-booking';
   };
@@ -441,36 +643,47 @@ export interface ApiYardBookingYardBooking extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    created_date: Schema.Attribute.DateTime;
+    bookingType: Schema.Attribute.Enumeration<['hourly', 'daily', 'event']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'hourly'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    customer_name: Schema.Attribute.String & Schema.Attribute.Required;
-    date_booking: Schema.Attribute.Date & Schema.Attribute.Required;
-    end_time: Schema.Attribute.Time & Schema.Attribute.Required;
+    customer: Schema.Attribute.Relation<'manyToOne', 'api::customer.customer'>;
+    customerNotes: Schema.Attribute.String;
+    durationHours: Schema.Attribute.Decimal;
+    endTime: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    eventDetails: Schema.Attribute.Component<
+      'event-details.event-details',
+      false
+    >;
+    invoice: Schema.Attribute.Relation<'oneToOne', 'api::invoice.invoice'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::yard-booking.yard-booking'
     > &
       Schema.Attribute.Private;
-    price: Schema.Attribute.Float & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
-    start_time: Schema.Attribute.Time & Schema.Attribute.Required;
-    status_booking: Schema.Attribute.Enumeration<
-      ['Booked', 'Cancelled', 'In Time', 'Out Time']
-    >;
+    services: Schema.Attribute.Relation<'manyToMany', 'api::service.service'>;
+    startTime: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    status: Schema.Attribute.Enumeration<
+      ['pending', 'confirmed', 'cancelled', 'completed']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'pending'>;
+    totalEstimate: Schema.Attribute.Decimal;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    yards: Schema.Attribute.Relation<'oneToMany', 'api::yard.yard'>;
+    yard: Schema.Attribute.Relation<'manyToOne', 'api::yard.yard'>;
   };
 }
 
 export interface ApiYardTypeYardType extends Struct.CollectionTypeSchema {
   collectionName: 'yard_types';
   info: {
-    displayName: 'Yard_Type';
+    displayName: 'YardType';
     pluralName: 'yard-types';
     singularName: 'yard-type';
   };
@@ -478,21 +691,48 @@ export interface ApiYardTypeYardType extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    basePricePerDay: Schema.Attribute.Decimal &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    basePricePerHour: Schema.Attribute.Decimal &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 0;
+        },
+        number
+      >;
+    capacity: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    description: Schema.Attribute.RichText;
+    eventMultiplier: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<1>;
+    isActive: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::yard-type.yard-type'
     > &
       Schema.Attribute.Private;
-    name: Schema.Attribute.Text & Schema.Attribute.Required;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    pricingTiers: Schema.Attribute.JSON;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    yard: Schema.Attribute.Relation<'manyToOne', 'api::yard.yard'>;
   };
 }
 
@@ -507,31 +747,29 @@ export interface ApiYardYard extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    active: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    descriptipons: Schema.Attribute.Blocks;
-    images: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios',
-      true
-    > &
-      Schema.Attribute.Required;
+    equipmentIncluded: Schema.Attribute.String;
+    isActive: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::yard.yard'> &
       Schema.Attribute.Private;
-    maintain_date: Schema.Attribute.DateTime;
+    location: Schema.Attribute.String;
+    maxCapacity: Schema.Attribute.Integer;
     name: Schema.Attribute.String & Schema.Attribute.Required;
+    photos: Schema.Attribute.Media<undefined, true>;
     publishedAt: Schema.Attribute.DateTime;
+    status: Schema.Attribute.Enumeration<
+      ['available', 'maintenance', 'booked']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'available'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    yard_booking: Schema.Attribute.Relation<
+    yardType: Schema.Attribute.Relation<
       'manyToOne',
-      'api::yard-booking.yard-booking'
-    >;
-    yard_types: Schema.Attribute.Relation<
-      'oneToMany',
       'api::yard-type.yard-type'
     >;
   };
@@ -1047,6 +1285,10 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::customer.customer': ApiCustomerCustomer;
+      'api::invoice-item.invoice-item': ApiInvoiceItemInvoiceItem;
+      'api::invoice.invoice': ApiInvoiceInvoice;
+      'api::service.service': ApiServiceService;
       'api::yard-booking.yard-booking': ApiYardBookingYardBooking;
       'api::yard-type.yard-type': ApiYardTypeYardType;
       'api::yard.yard': ApiYardYard;

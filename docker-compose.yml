@@ -17,6 +17,11 @@ services:
       ADMIN_JWT_SECRET: "5+IcgHXAcwk3meNlZ+aRig=="
       TRANSFER_TOKEN_SALT: "SEAs+BBa4RCd5czTk922Bw=="
       ENCRYPTION_KEY: "GRXIwdsM6lioLt5w0ArWsQ=="
+      # Cloudinary
+      CLOUDINARY_NAME: "dzf4ygjfw"
+      CLOUDINARY_KEY: "394936274671967"
+      CLOUDINARY_SECRET: "WXgLCZL1VuijtGUwqfbY2gQun6I"
+
 
       # Database
       DATABASE_CLIENT: postgres
