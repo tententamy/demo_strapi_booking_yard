@@ -9,6 +9,7 @@
   "options": {
     "draftAndPublish": true
   },
+  "pluginOptions": {},
   "attributes": {
     "name": {
       "type": "string",
@@ -34,16 +35,13 @@
       "type": "string"
     },
     "isHourly": {
-      "type": "boolean",
-      "default": false
+      "type": "boolean"
     },
     "isDaily": {
-      "type": "boolean",
-      "default": false
+      "type": "boolean"
     },
     "isEvent": {
-      "type": "boolean",
-      "default": false
+      "type": "boolean"
     },
     "maxQuantity": {
       "type": "integer"
@@ -55,8 +53,19 @@
       "type": "datetime"
     },
     "isActive": {
-      "type": "boolean",
-      "default": true
+      "type": "boolean"
+    },
+    "yard_bookings": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::yard-booking.yard-booking",
+      "mappedBy": "services"
+    },
+    "invoice_items": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::invoice-item.invoice-item",
+      "mappedBy": "service"
     }
   }
 }

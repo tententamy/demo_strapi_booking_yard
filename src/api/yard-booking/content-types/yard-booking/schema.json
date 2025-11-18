@@ -9,6 +9,7 @@
   "options": {
     "draftAndPublish": true
   },
+  "pluginOptions": {},
   "attributes": {
     "bookingType": {
       "type": "enumeration",
@@ -34,7 +35,7 @@
     "customerNotes": {
       "type": "string"
     },
-    "status": {
+    "status_booking": {
       "type": "enumeration",
       "required": true,
       "default": "pending",
@@ -50,28 +51,37 @@
     },
     "eventDetails": {
       "type": "component",
-      "repeatable": false,
-      "component": "event-details.event-details"
+      "component": "event-details.event-details",
+      "repeatable": false
     },
     "yard": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::yard.yard"
+      "target": "api::yard.yard",
+      "inversedBy": "yard_bookings"
     },
     "services": {
       "type": "relation",
       "relation": "manyToMany",
-      "target": "api::service.service"
+      "target": "api::service.service",
+      "inversedBy": "yard_bookings"
     },
-    "customer": {
+    "member": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::customer.customer"
+      "target": "api::member.member",
+      "inversedBy": "yard_bookings"
     },
     "invoice": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::invoice.invoice"
+    },
+    "invoice_items": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::invoice-item.invoice-item",
+      "mappedBy": "yard_booking"
     }
   }
 }

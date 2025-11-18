@@ -9,6 +9,7 @@
   "options": {
     "draftAndPublish": true
   },
+  "pluginOptions": {},
   "attributes": {
     "invoiceNumber": {
       "type": "string",
@@ -18,17 +19,15 @@
       "type": "decimal"
     },
     "discountAmount": {
-      "type": "decimal",
-      "default": 0
+      "type": "decimal"
     },
     "taxAmount": {
-      "type": "decimal",
-      "default": 0
+      "type": "decimal"
     },
     "grandTotal": {
       "type": "decimal"
     },
-    "status": {
+    "status_invoice": {
       "type": "enumeration",
       "required": true,
       "default": "draft",
@@ -59,20 +58,22 @@
     "notes": {
       "type": "string"
     },
-    "booking": {
+    "yard_booking": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::yard-booking.yard-booking"
     },
-    "customer": {
+    "member": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::customer.customer"
+      "target": "api::member.member",
+      "inversedBy": "invoices"
     },
-    "items": {
+    "invoice_items": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::invoice-item.invoice-item"
+      "target": "api::invoice-item.invoice-item",
+      "mappedBy": "invoice"
     }
   }
 }

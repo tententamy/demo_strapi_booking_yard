@@ -9,6 +9,7 @@
   "options": {
     "draftAndPublish": true
   },
+  "pluginOptions": {},
   "attributes": {
     "type": {
       "type": "enumeration",
@@ -20,7 +21,7 @@
         "addon"
       ]
     },
-    "description": {
+    "descripton": {
       "type": "string"
     },
     "quantity": {
@@ -47,28 +48,32 @@
     },
     "eventDetails": {
       "type": "component",
-      "repeatable": false,
-      "component": "event-details.event-details"
+      "component": "event-details.event-details",
+      "repeatable": false
     },
     "invoice": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::invoice.invoice"
+      "target": "api::invoice.invoice",
+      "inversedBy": "invoice_items"
     },
-    "booking": {
+    "yard_booking": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::yard-booking.yard-booking"
+      "target": "api::yard-booking.yard-booking",
+      "inversedBy": "invoice_items"
     },
     "service": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::service.service"
+      "target": "api::service.service",
+      "inversedBy": "invoice_items"
     },
     "yard": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::yard.yard"
+      "target": "api::yard.yard",
+      "inversedBy": "invoice_items"
     }
   }
 }

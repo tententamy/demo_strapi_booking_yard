@@ -9,6 +9,7 @@
   "options": {
     "draftAndPublish": true
   },
+  "pluginOptions": {},
   "attributes": {
     "name": {
       "type": "string",
@@ -17,7 +18,7 @@
     "location": {
       "type": "string"
     },
-    "status": {
+    "status_yard": {
       "type": "enumeration",
       "required": true,
       "default": "available",
@@ -27,13 +28,18 @@
         "booked"
       ]
     },
-    "photos": {
+    "photo": {
       "type": "media",
-      "multiple": true
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
     },
     "equipmentIncluded": {
-      "type": "string",
-      "multiple": true
+      "type": "string"
     },
     "maxCapacity": {
       "type": "integer"
@@ -42,10 +48,23 @@
       "type": "boolean",
       "default": true
     },
-    "yardType": {
+    "yard_type": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::yard-type.yard-type"
+      "target": "api::yard-type.yard-type",
+      "inversedBy": "yards"
+    },
+    "yard_bookings": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::yard-booking.yard-booking",
+      "mappedBy": "yard"
+    },
+    "invoice_items": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::invoice-item.invoice-item",
+      "mappedBy": "yard"
     }
   }
 }

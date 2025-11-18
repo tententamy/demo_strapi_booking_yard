@@ -1,18 +1,18 @@
 {
   "kind": "collectionType",
-  "collectionName": "customers",
+  "collectionName": "members",
   "info": {
-    "singularName": "customer",
-    "pluralName": "customers",
-    "displayName": "Customer",
-    "description": "Khách hàng - Info cá nhân & Thanh toán"
+    "singularName": "member",
+    "pluralName": "members",
+    "displayName": "Member"
   },
   "options": {
     "draftAndPublish": true
   },
+  "pluginOptions": {},
   "attributes": {
     "fullName": {
-      "type": "string",
+      "type": "text",
       "required": true
     },
     "phone": {
@@ -47,6 +47,18 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "plugin::users-permissions.user"
+    },
+    "yard_bookings": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::yard-booking.yard-booking",
+      "mappedBy": "member"
+    },
+    "invoices": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::invoice.invoice",
+      "mappedBy": "member"
     }
   }
 }
